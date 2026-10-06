@@ -1,0 +1,5 @@
+cat > .dockerignore << 'EOF'
+data/
+.venv/
+*.parquet
+EOF

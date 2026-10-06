@@ -39,10 +39,15 @@ parse_dates = [
 @click.option("--pg-database", default="ny_taxi", show_default=True)
 @click.option("--chunk-size", type=click.IntRange(min=1), default=100000, show_default=True)
 @click.option("--table-name", default="yellow_taxi_data", show_default=True)
-def run(year, month, pg_user, pg_password, pg_host, pg_port, pg_database, chunk_size, table_name):
+@click.option("--url", default=None, help="URL or local file path. If not set, built from year and month.")
+def run(year, month, pg_user, pg_password, pg_host, pg_port, pg_database, chunk_size, table_name, url):
 
-    prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/'
-    url=f'{prefix}yellow_tripdata_{year}-{month:02d}.csv.gz'
+    if url is None:
+        prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/'
+        url = f'{prefix}yellow_tripdata_{year}-{month:02d}.csv.gz'
+
+    print(f"Reading from: {url}")
+
     engine = create_engine(f'postgresql+psycopg://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_database}')
 
     df_iter = pd.read_csv(
@@ -52,11 +57,11 @@ def run(year, month, pg_user, pg_password, pg_host, pg_port, pg_database, chunk_
         iterator=True,
         chunksize=chunk_size,
     )
-    first=True
+    first = True
     for df_chunk in tqdm(df_iter):
         if first:
             df_chunk.head(0).to_sql(name=table_name, con=engine, if_exists='replace')
-            first=False
+            first = False
         df_chunk.to_sql(name=table_name, con=engine, if_exists='append')
 
 
