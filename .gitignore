@@ -217,3 +217,56 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ===== Terraform =====
+# Local provider downloads and cache
+.terraform/
+**/.terraform/*
+# State files: can contain resource details and sensitive values
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+# Variable files often hold project IDs, emails, or secrets
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# ===== Google Cloud credentials =====
+# Service account keys and credential files
+*.json.key
+key.json
+*-key.json
+*credentials*.json
+application_default_credentials.json
+service-account*.json
+sa-*.json
+.gcloud/
+.config/gcloud/
+
+# ===== Other secrets =====
+*.pem
+*.p12
+secrets/
+.secrets
+
+# Terraform plan files
+*.tfplan
+tfplan
+planout
+
+# Google Cloud credentials
+*.json.key
+key.json
+*-key.json
+*credentials*.json
+application_default_credentials.json
+service-account*.json
+.config/gcloud/
