@@ -1,16 +1,11 @@
 {
   "name": "data-engineering",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {
-    "ghcr.io/devcontainers/features/terraform:1": {},
-    "ghcr.io/devcontainers/features/git-lfs:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/python:1": {}
-  },
-  "postCreateCommand": "curl -sSL https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir=$HOME && echo 'source $HOME/google-cloud-sdk/path.bash.inc' >> ~/.bashrc",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "forwardPorts": [8080, 8085, 5432],
   "customizations": {
     "vscode": {
-      "extensions": ["hashicorp.terraform","ms-python.python"]
+      "extensions": ["hashicorp.terraform", "ms-python.python"]
     }
   }
 }
